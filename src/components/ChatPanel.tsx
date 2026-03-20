@@ -1,5 +1,5 @@
 // src/components/ChatPanel.tsx
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useChatStore }from '../store/chatStore';
 import { useGeminiChat } from '../hooks/useGeminiChat';
 import { getConversationPath } from '../utils/tree';
