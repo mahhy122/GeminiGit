@@ -1,50 +1,23 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/core";
-import "./App.css";
+// src/App.tsx
+import { ChatPanel } from './components/ChatPanel';
+import './App.css'; // ※初期設定のCSSが残っていても一旦大丈夫です
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
-
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    setGreetMsg(await invoke("greet", { name }));
-  }
-
   return (
-    <main className="container">
-      <h1>Welcome to Tauri + React</h1>
-
-      <div className="row">
-        <a href="https://vite.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div style={{ display: 'flex', width: '100vw', height: '100vh', margin: 0 }}>
+      {/* 左側にツリー表示（次回実装予定のエリア） */}
+      <div style={{ flex: 1, borderRight: '1px solid #ccc', backgroundColor: '#f0f0f0' }}>
+        <h3 style={{ padding: '20px', margin: 0 }}>🌲 会話ツリー (準備中)</h3>
+        <p style={{ padding: '0 20px', color: '#666' }}>
+          ここにReact Flowを使って、ブランチの分岐を描画します。
+        </p>
       </div>
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
-      <p>{greetMsg}</p>
-    </main>
+      
+      {/* 右側にチャット画面 */}
+      <div style={{ flex: 2 }}>
+        <ChatPanel />
+      </div>
+    </div>
   );
 }
 
