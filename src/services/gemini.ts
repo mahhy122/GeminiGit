@@ -1,8 +1,8 @@
 // src/services/gemini.ts
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import 'server-only';
+
 // .env.localからAPIキーを読み込み
-const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
 if(!apiKey){
   throw new Error("APIキーが設定されていません。.env.localを確認してください");
