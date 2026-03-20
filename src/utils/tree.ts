@@ -8,10 +8,10 @@ export const getConversationPath = (
 ): MessageNode[] => {
   const path:MessageNode[] = [];
   let currentId = leafId;
-
+  // 親ノードがなくなるまでループ
   while (currentId && nodes[currentId]) {
-    path.unshift(nodes[currentId]);  // 配列の先頭に追加して絶頂く
-    currentId = nodes[currentId].parentId;
+    path.unshift(nodes[currentId]);         // 配列の先頭に追加して絶頂く
+    currentId = nodes[currentId].parentId;  //次のターゲットを親ノードに切り替え
   }
   return path;  // [古い発言,....,新しい発言]
 };

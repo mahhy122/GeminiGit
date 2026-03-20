@@ -6,9 +6,9 @@ import { getConversationPath } from '../utils/tree';
 import { Send } from 'lucide-react';
 
 export const ChatPanel = () => {
-  const [input, setInput] = useState('');
-  const { tree } = useChatStore();
-  const { handleSend } = useGeminiChat();
+  const [input, setInput] = useState('');  // 入力欄のテキスト状態
+  const { tree } = useChatStore();         // ツリー全体の状態
+  const { handleSend } = useGeminiChat();  // 送信処理のフック
 
   // 現在選択されているブランチの会話を一番上から時系列の配列として取得
   const currentPath = getConversationPath(tree.currentLeafId, tree.nodes);

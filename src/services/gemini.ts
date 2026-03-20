@@ -12,6 +12,7 @@ if(!apiKey){
 const genAI = new GoogleGenerativeAI(apiKey);
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
+// ユーザーのプロンプトをGeminiに送信し，回答を取得
 export const sendMessageToGemini = async (prompt: string) =>{
   try {
     const result = await model.generateContent(prompt);
@@ -23,6 +24,7 @@ export const sendMessageToGemini = async (prompt: string) =>{
   }
 };
 
+// 会話の内容からブランチの目印となるタグを自動生成
 export const generateCommitMessage = async (content: string) => {
   const prompt =`
 以下の会話内容を、1行（20文字以内）で要約してください。

@@ -11,11 +11,11 @@ interface ChatState {
     comment: string, 
     parentId: string | null
   ) => string;
-  // アクティブなブランチを切り替える
+  // 過去のノードに戻る，またはブランチを切り替える関数
   setCurrentLeaf: (
     id: string 
   ) => void;
-  // ノードにコメント（メタデータ）を残す
+  // ノードのコメントを更新する関数
   updateComment: (
     id: string,
     comment: string
@@ -23,6 +23,7 @@ interface ChatState {
 }
 
 export const useChatStore = create<ChatState>((set) => ( ({
+  // 初期状態は空のツリー
   tree: {
     nodes: {},
     currentLeafId: null,
@@ -31,6 +32,7 @@ export const useChatStore = create<ChatState>((set) => ( ({
   // currentLeafId: 現在の最新ノード
   addMessage: (role, content, parentId) => {
     const id = uuidv4();  // ランダムでユニークなIDを生成
+    // 新しいノードを作成
     const newNode: MessageNode = {
       id,
       parentId,
@@ -40,16 +42,18 @@ export const useChatStore = create<ChatState>((set) => ( ({
     };
     set((state) =>({
       tree: {
+        // 既存のノード一覧を展開し，最後に新しいノードを追加
         nodes: { ...state.tree.nodes, [id]: newNode },
         currentLeafId: id,  // 新しいノードを現在の末端としてセット
       },
     }));
-    return id;  // 作成したしたIDを返す
+    return id;  // 作成したしたIDを返す(AIの解答をこの子ノードとしてつなげるため)
   },
   // 指定した過去のノードのIDに飛び，そこを現在地とする
   // ここから別の質問を投げればブランチが誕生
   setCurrentLeaf: (id) => {
     set((state) => ({
+      // treeの中身はそのままに，現在地(Head)だけを書き換える
       tree: { ...state.tree, currentLeafId: id },
     }));
   },
@@ -59,6 +63,7 @@ export const useChatStore = create<ChatState>((set) => ( ({
         ...state.tree,
         nodes: {
           ...state.tree.nodes,
+          // 指定されたIDのノードだけを展開し，commentプロパティを上書き
           [id]: { ...state.tree.nodes[id], comment },
         },
       },
