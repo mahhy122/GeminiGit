@@ -8,7 +8,7 @@ interface ChatState {
   // メッセージを追加する（Gitの commit に相当）
   addMessage: (
     role: Role, 
-    comment: string, 
+    content: string, 
     parentId: string | null
   ) => string;
   // 過去のノードに戻る，またはブランチを切り替える関数
